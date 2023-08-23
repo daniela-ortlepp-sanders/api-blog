@@ -19,10 +19,10 @@ use App\Http\Controllers\SkuController;
 
 Route::controller(AuthController::class)->group(function () {
     Route::post('/login', 'login')->middleware(['api.key', 'ip.block']);
-    Route::post('/refresh', 'refresh')->middleware(['jwt.verify.apikey', 'ip.block']);
+    Route::post('/refresh', 'refresh')->middleware(['ip.block', 'jwt.verify.apikey']);
 });
 
-Route::controller(SkuController::class)->middleware(['jwt.verify.apikey', 'ip.block'])->group(function () {
+Route::controller(SkuController::class)->middleware(['ip.block', 'jwt.verify.apikey'])->group(function () {
     Route::get('sku', 'getSkus');
 }); 
 

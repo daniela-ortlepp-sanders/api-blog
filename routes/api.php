@@ -27,6 +27,6 @@ Route::controller(SkuController::class)->middleware(['jwt.verify.apikey', 'ip.bl
 }); 
 
 Route::get('/getip', function(Request $request) {
-    $localIP = getHostByName(php_uname('n'));
+    $localIP = $_SERVER['SERVER_ADDR'];
     return $localIP;
 });

@@ -18,7 +18,7 @@ use App\Http\Controllers\SkuController;
 */
 
 Route::controller(AuthController::class)->group(function () {
-    Route::post('/login', 'login')->middleware(['api.key', 'ip.block']);
+    Route::post('/login', 'login')->middleware(['ip.block', 'api.key']);
     Route::post('/refresh', 'refresh')->middleware(['ip.block', 'jwt.verify.apikey']);
 });
 

@@ -14,7 +14,7 @@ class ApiKeyAuth
         $apiKey = $request->header('X-API-KEY');
 
         if ($apiKey !== env('API_KEY')) {
-            return response()->json(['message' => 'Invalid API key'], 401);
+            return response()->json(['message' => 'Invalid API key ' . $apiKey], 401);
         }
 
         return $next($request);

@@ -16,7 +16,11 @@ class IpBlock
         $localIP = getHostByName(php_uname('n'));
 
         if (!in_array($localIP, $whiteListIps)) {
-            return response()->json(['error' => 'Unauthorized'], 401);
+            return response()->json([
+                'error' => 'Unauthorized',
+                'ip' => $localIP,
+                'white list' => $whiteListIps
+            ], 401);
         }
 
         return $next($request);

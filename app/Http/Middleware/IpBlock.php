@@ -11,7 +11,7 @@ class IpBlock
 {
     public function handle(Request $request, Closure $next)
     {
-        $whiteListIps = \Config::get('variables.white_list_ips');
+        $whiteListIps = ['192.168.3.6', '172.31.64.100', '172.30.192.1'];
 
         $localIP = getHostByName(php_uname('n'));
 

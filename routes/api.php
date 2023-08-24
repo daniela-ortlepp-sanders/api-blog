@@ -18,11 +18,11 @@ use App\Http\Controllers\SkuController;
 */
 
 Route::controller(AuthController::class)->group(function () {
-    Route::post('/login', 'login')->middleware(['ip.block', 'api.key']);
-    Route::post('/refresh', 'refresh')->middleware(['ip.block', 'jwt.verify.apikey']);
+    Route::post('/login', 'login')->middleware(['ip.block', 'api.key', \Spatie\Csp\AddCspHeaders::class]);
+    Route::post('/refresh', 'refresh')->middleware(['ip.block', 'jwt.verify.apikey', \Spatie\Csp\AddCspHeaders::class]);
 });
 
-Route::controller(SkuController::class)->middleware(['ip.block', 'jwt.verify.apikey'])->group(function () {
+Route::controller(SkuController::class)->middleware(['ip.block', 'jwt.verify.apikey', \Spatie\Csp\AddCspHeaders::class])->group(function () {
     Route::get('sku', 'getSkus');
 }); 
 

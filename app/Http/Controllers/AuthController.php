@@ -17,34 +17,6 @@ use App\Services\UtilService;
 
 class AuthController extends Controller
 {
-    public function authorization(Request $request) {
-        $whiteListIps = \Config::get('variables.white_list_ips');
-
-        $ip = $request->get('ip');
-
-        if (in_array($ip, $valid_ips)) {
-            return response()->json([
-                'status' => 'Authorized',
-            ], 200);
-        } else {
-            return response()->json(['error' => 'Unauthorized'], 401);
-        }
-    }
-
-    /*public function getip(Request $request) {
-        $valid_ips = \Config::get('variables.valid_ips');
-
-        $ip = $request->get('ip');
-
-        if (in_array($ip, $valid_ips)) {
-            return response()->json([
-                'status' => 'Authorized',
-            ], 200);
-        } else {
-            return response()->json(['error' => 'Unauthorized'], 401);
-        }
-    }*/
-
     public function login(Request $request)
     {
         $apiKey = $request->header('X-API-KEY');
@@ -69,7 +41,6 @@ class AuthController extends Controller
             'status' => 'success',
             'authorization' => [
                 'token' => $token->get(),
-                'exp' => $exp,
                 'type' => 'bearer',
             ]
         ]);

@@ -13,7 +13,7 @@ class IpBlock
     {
         $whiteListIps = \Config::get('variables.white_list_ips');
 
-        $localIP = $_SERVER['SERVER_ADDR'];
+        $localIP = getHostByName(php_uname('n'));
 
         if (!in_array($localIP, $whiteListIps)) {
             return response()->json(['error' => 'Unauthorized'], 401);

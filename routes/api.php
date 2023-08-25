@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CollectionController;
 use App\Http\Controllers\SkuController;
 
 /*
@@ -24,6 +25,10 @@ Route::controller(AuthController::class)->group(function () {
 
 Route::controller(SkuController::class)->middleware(['ip.block', 'jwt.verify.apikey', \Spatie\Csp\AddCspHeaders::class])->group(function () {
     Route::get('sku', 'getSkus');
+});
+
+Route::controller(CollectionController::class)->middleware(['ip.block', 'jwt.verify.apikey', \Spatie\Csp\AddCspHeaders::class])->group(function () {
+    Route::get('top-skus', 'getTopSkus');
 }); 
 
 Route::get('/getip', function(Request $request) {

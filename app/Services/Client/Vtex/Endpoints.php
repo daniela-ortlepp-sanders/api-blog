@@ -2,6 +2,7 @@
 
 namespace App\Services\Client\Vtex;
 
+use App\Services\Client\Vtex\Collection;
 use App\Services\Client\Vtex\Sku;
 use App\Services\Client\Vtex\Price;
 
@@ -20,4 +21,8 @@ class Endpoints {
         return $price->get($skuId);
 	}
 
+	public function listCollections(int $collectionId, int $pageSize) {
+        $collection = app()->make(Collection::class);
+        return $collection->list($collectionId, $pageSize);
+	}
 }

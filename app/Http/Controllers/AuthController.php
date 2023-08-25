@@ -25,18 +25,18 @@ class AuthController extends Controller
         $issuedAt   = time();
         $notBefore  = $issuedAt + 10;
         $exp        = Carbon::now()->addMinutes(60)->setTimezone('America/Sao_Paulo')->timestamp;
-       $serverName = $_SERVER['SERVER_NAME'];
+        $serverName = $_SERVER['SERVER_NAME'];
 
-        $secretKey = base64_decode(getenv('JWT_SECRET'));
+        $secretKey = base64_decode(env('JWT_SECRET'));
         $requestTime = date('Y-m-d H:i:s', time());
         $data = ['requestTime' => $requestTime];
 
         $payload = [
-            'iat'  => $issuedAt,         // Issued at: time when the token was generated
-            'jti'  => $tokenId,          // Json Token Id: an unique identifier for the token
-            'iss'  => $serverName,       // Issuer
-            'nbf'  => $notBefore,        // Not before
-            'exp'  => $exp,             // Expire
+            'iat'  => $issuedAt,
+            'jti'  => $tokenId,
+            'iss'  => $serverName,
+            'nbf'  => $notBefore,
+            'exp'  => $exp,
             'data' => $data
         ];
 

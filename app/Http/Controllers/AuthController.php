@@ -21,21 +21,29 @@ class AuthController extends Controller
     {
         $apiKey = $request->header('X-API-KEY');
 
-        $requestTime = date('Y-m-d H:i:s', time());
-        $data = ['api_key' => $apiKey, 'requestTime' => $requestTime];
+        $tokenId    = base64_encode(random_bytes(32));
+        $issuedAt   = time();
+        $notBefore  = $issuedAt + 10;
+        $exp        = Carbon::now()->addMinutes(60)->setTimezone('America/Sao_Paulo')->timestamp;
+       $serverName = $_SERVER['SERVER_NAME'];
 
-        $currentDateTime = Carbon::now();
-        $exp = Carbon::now()->addMinutes(60)->setTimezone('America/Sao_Paulo')->timestamp;
+        $secretKey = base64_decode(getenv('JWT_SECRET'));
+        $requestTime = date('Y-m-d H:i:s', time());
+        $data = ['requestTime' => $requestTime];
 
         $payload = [
-            'iat' => time(),
-            'exp' => $exp
+            'iat'  => $issuedAt,         // Issued at: time when the token was generated
+            'jti'  => $tokenId,          // Json Token Id: an unique identifier for the token
+            'iss'  => $serverName,       // Issuer
+            'nbf'  => $notBefore,        // Not before
+            'exp'  => $exp,             // Expire
+            'data' => $data
         ];
-        
+
         $customClaims = JWTFactory::customClaims($data);
         $payload = JWTFactory::make($data);
 
-        $token = JWTAuth::encode($payload, $data);
+        $token = JWTAuth::encode($payload);
 
         return response()->json([
             'status' => 'success',

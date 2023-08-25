@@ -28,11 +28,6 @@ class VerifyJwtToken
             $exp = date("Y-m-d H:i:s",$payload->get('exp'));
             $now = Carbon::now();
             
-            // Verifica se a API key no token JWT é igual à API key fornecida
-            if ($payload["api_key"] !== env('API_KEY')) {
-                return response()->json(['message' => 'Invalid API key'], 401);
-            }
-
             // Verifica se o token expirou
             if ($payload->get('exp') < $now->timestamp) {
                 return response()->json(['message' => 'Token expired'], 401);

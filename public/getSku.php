@@ -3,6 +3,15 @@ require __DIR__.'/../vendor/autoload.php';
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
+$allowedMethods = array('GET');
+
+$requestMethod = strtoupper($_SERVER['REQUEST_METHOD']);
+
+if (!in_array($requestMethod, $allowedMethods)) {
+    header($_SERVER["SERVER_PROTOCOL"]." 405 Method Not Allowed", true, 405);
+    exit;
+}
+
 $app = require_once __DIR__.'/../bootstrap/app.php';
 
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__.'/..');

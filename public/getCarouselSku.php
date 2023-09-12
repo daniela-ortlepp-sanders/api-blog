@@ -35,7 +35,7 @@ $responseBody = json_decode($response->getContent(), true);
 $token = $responseBody["authorization"]["token"] ?? null;
 
 // Get Skus
-$request = Request::create("/api/top-skus?id=232&page=10", 'GET');
+$request = Request::create("/api/top-skus?id=231&page=10", 'GET');
 $request->headers->set('Accept', 'application/json');
 $request->headers->set('Content-Type', 'application/json');
 $request->headers->set('Authorization', "Bearer {$token}");

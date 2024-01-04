@@ -40,18 +40,22 @@ class AuthController extends Controller
             'data' => $data
         ];
 
-        $customClaims = JWTFactory::customClaims($data);
-        $payload = JWTFactory::make($data);
+        try {
+            $customClaims = JWTFactory::customClaims($data);
+            $payload = JWTFactory::make($data);
 
-        $token = JWTAuth::encode($payload);
+            $token = JWTAuth::encode($payload);
 
-        return response()->json([
-            'status' => 'success',
-            'authorization' => [
-                'token' => $token->get(),
-                'type' => 'bearer',
-            ]
-        ]);
+            return response()->json([
+                'status' => 'success',
+                'authorization' => [
+                    'token' => $token->get(),
+                    'type' => 'bearer',
+                ]
+            ]);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()]);
+        }
     }
 
     public function refresh(Request $request)
